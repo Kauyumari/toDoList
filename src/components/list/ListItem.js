@@ -1,26 +1,33 @@
 import React from 'react'
 import Button from '../elements/Button'
+import { connect } from 'react-redux'
+import * as actions from '../../redux/actions'
 
 const ListItem = (props) => {
 
-    let {item, removeItemFromList, taskCompleted} = props
+    let {item, index,  removeItemFromList, taskCompleted} = props
     return (
         <div className='card'>
             {
                 item.completed ? (<span className='completed'>{item.task}</span>) : item.task
             }
             <Button
-                clickHandler={removeItemFromList}>
-                    <i class="far fa-trash-alt"></i>
+                clickHandler={() => removeItemFromList(index)}>
+                    <i className="far fa-trash-alt"></i>
             </Button>
             <Button
-                clickHandler={taskCompleted}>
+                clickHandler={() => taskCompleted(index)}>
                     {
-                        item.completed ? <i class="fas fa-check-square"></i> : <i class="far fa-check-square"></i>
+                        item.completed ? <i className="fas fa-check-square"></i> : <i className="far fa-check-square"></i>
                     }
             </Button>
         </div>
     )
 }
 
-export default ListItem
+const mapStateToProps = ({toDo}) => {
+    const {task} = toDo
+    return {task}
+}
+
+export default connect(mapStateToProps, actions)(ListItem)

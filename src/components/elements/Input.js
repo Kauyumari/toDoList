@@ -2,14 +2,14 @@ import React from 'react';
 
 
 const Input = (props) => {
-    let {inputHandler, taskValue} = props
+    let {inputHandler, inputValue} = props
     return(
         <input 
         type='text'
         placeholder='New Task...'
-        value={taskValue}
+        value={inputValue}
         onChange={inputHandler}
-        onKeyPress={props.inputHandler}/>
+        onKeyPress={inputHandler}/>
     )
 }
 

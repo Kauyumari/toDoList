@@ -1,17 +1,18 @@
 import React from 'react'
 import ListItem from './ListItem'
+import { connect } from 'react-redux'
+import * as actions from '../../redux/actions'
 
 const List = (props) => {
 
-    let {listItems, removeItemFromList, taskCompleted} = props
-
-    let listContent = listItems.map((item, index) => {
+    let {list} = props
+    
+    let listContent = list.map((item, index) => {
         return (
-            <ListItem
-            removeItemFromList={() => {removeItemFromList(index)}}
+            <ListItem  
             item={item}
             key={index}
-            taskCompleted={() => {taskCompleted(index)}}
+            index={index}
             />
         )
     })
@@ -22,4 +23,8 @@ const List = (props) => {
     )
 }
 
-export default List
+const mapStateToProps = ({toDo}) => {
+    const { list, task } = toDo
+    return { list, task }
+}
+export default connect(mapStateToProps, actions)(List)
