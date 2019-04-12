@@ -12,6 +12,7 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
     let { task, list } = state
+    let tempList 
     
     switch (action.type) {
         case UPDATE_TASK:
@@ -42,14 +43,17 @@ export default (state = INITIAL_STATE, action) => {
                 ...state, list, task
             }
         case REMOVE_ITEM_FROM_LIST:
-            list.splice(action.payload, 1)
+            tempList = JSON.parse(JSON.stringify(list))
+            tempList.splice(action.payload, 1)
             return {
-                ...state, list
+                ...state, list: tempList
             }
         case TASK_COMPLETED:
-            list[action.payload].completed = !list[action.payload].completed
+            tempList = JSON.parse(JSON.stringify(list))
+            let index = action.payload
+            tempList[index].completed = !tempList[index].completed
             return {
-                ...state, list
+                ...state, list: tempList
             }
         default:
             return state
